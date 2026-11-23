@@ -20,7 +20,7 @@ CCTV-2,http://172.31.203.136:8006/jscn/CCTV-2HD.m3u8$Name=江苏有线$Logo=http
 CCTV-3,http://172.31.203.136:8006/jscn/CCTV-3HD.m3u8$Name=江苏有线$Logo=https://raw.githubusercontent.com/xuyidandandan/jizhi/refs/heads/main/logo/CCTV2.png
 CCTV-4,http://172.31.203.136:8006/jscn/CCTV-4HD.m3u8$Name=江苏有线$Logo=https://raw.githubusercontent.com/xuyidandandan/jizhi/refs/heads/main/logo/CCTV4.png
 CCTV-5,http://172.31.203.136:8006/jscn/CCTV-5HD.m3u8$Name=江苏有线$Logo=https://raw.githubusercontent.com/xuyidandandan/jizhi/refs/heads/main/logo/CCTV5.png
-CCTV-5+,http://172.31.203.136:8006/jscn/CCTV-5PLUSHD.m3u8$Name=江苏有线
+CCTV-5+,http://172.31.203.136:8006/jscn/CCTV-5PLUSHD.m3u8$Name=江苏有线$Logo=https://raw.githubusercontent.com/xuyidandandan/jizhi/refs/heads/main/logo/CCTV5+.png
 CCTV-6,http://172.31.203.136:8006/jscn/CCTV-6HD.m3u8$Name=江苏有线$Logo=https://raw.githubusercontent.com/xuyidandandan/jizhi/refs/heads/main/logo/CCTV6.png
 CCTV-7,http://172.31.203.136:8006/jscn/CCTV-7HD.m3u8$Name=江苏有线$Logo=https://raw.githubusercontent.com/xuyidandandan/jizhi/refs/heads/main/logo/CCTV7.png
 CCTV-8,http://172.31.203.136:8006/jscn/CCTV-8HD.m3u8$Name=江苏有线$Logo=https://raw.githubusercontent.com/xuyidandandan/jizhi/refs/heads/main/logo/CCTV8.png
