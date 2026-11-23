@@ -1,4 +1,4 @@
-Logo=http://www.huaqiuqiu.site:5678/data/icon/%s.png
+Logo=https://raw.githubusercontent.com/xuyidandandan/jizhi/refs/heads/main/logo/%s.png
 Decoder=1
 Analyzeduration=1000
 Aspect=1
