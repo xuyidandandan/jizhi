@@ -1,0 +1,13 @@
+Js=btime
+User-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36
+Referer=https://www.btime.com/
+北京卫视,http://?id=bjws
+北京卫视4K,http://?id=bjws4k
+北京文艺,http://?id=bjwy
+北京纪实科教,http://?id=bjjs
+北京影视,http://?id=bjys
+北京财经,http://?id=bjcj
+北京体育休闲,http://?id=bjty
+北京生活,http://?id=bjsh
+北京新闻,http://?id=bjxw
+北京卡酷少儿,http://?id=bjkk
