@@ -1,0 +1,370 @@
+
+function main(item) {
+    const baseUrl = "http://lvpepg.uni.jsa.bcs.ottcn.com:8080/cms-lvp-epg/lvps/";
+
+    const ability = JSON.stringify({
+        deviceGroupIds: ["5362"],
+        districtCode: "320000"
+    });
+
+    const headers = {
+        "User-Agent": "Mozilla/5.0",
+        "Accept": "application/json, text/plain, */*"
+    };
+
+    // ================= 日期：过去5天+今天+明天 =================
+
+    const timestamps = [];
+    const now = new Date();
+
+    for (let i = -5; i <= 1; i++) {
+        const d = new Date(now);
+        d.setDate(d.getDate() + i);
+        d.setHours(0, 0, 0, 0);
+        timestamps.push(d.getTime());
+    }
+
+    // ================= 工具函数 =================
+
+    function getJson(url) {
+        try {
+            const res = jz.get(url, headers);
+            if (!jz.isJSONObject(res)) return null;
+            return JSON.parse(res);
+        } catch (e) {
+            return null;
+        }
+    }
+
+    // 递归从频道接口中提取频道
+    function extractChannels(obj, result) {
+        if (!obj || typeof obj !== "object") return;
+
+        if (!Array.isArray(obj)) {
+            const uuid = obj.uuid || obj.UUID;
+            const name = obj.channelName || obj.name;
+
+            if (uuid && name) {
+                result.push({
+                    uuid: String(uuid).trim(),
+                    name: String(name).trim()
+                });
+            }
+        }
+
+        if (Array.isArray(obj)) {
+            for (const v of obj) {
+                extractChannels(v, result);
+            }
+        } else {
+            for (const key in obj) {
+                if (obj[key] && typeof obj[key] === "object") {
+                    extractChannels(obj[key], result);
+                }
+            }
+        }
+    }
+
+    // ================= 频道名称规范化 =================
+
+    function normalizeChannel(name) {
+        let n = String(name || "").trim();
+
+        // 排除英文CCTV-9
+        if (/CCTV\s*[-_]?\s*9\s*\(\s*英\s*\)/i.test(n)) {
+            return null;
+        }
+
+        // CCTV 4K、8K
+        if (/^(央视|CCTV)[-_ ]?4K$/i.test(n.replace(/\s/g, ""))) {
+            return "CCTV-4K";
+        }
+
+        if (/^(央视|CCTV)[-_ ]?8K$/i.test(n.replace(/\s/g, ""))) {
+            return "CCTV-8K";
+        }
+
+        if (/CCTV.*4K/i.test(n) && !/16/.test(n)) {
+            return "CCTV-4K";
+        }
+
+        if (/CCTV.*8K/i.test(n)) {
+            return "CCTV-8K";
+        }
+
+        // CCTV-5+
+        if (/CCTV\s*[-_]?\s*5\s*\+/i.test(n)) {
+            return "CCTV-5+";
+        }
+
+        // CCTV-1 至 CCTV-17
+        const cctv = n.match(/CCTV\s*[-_]?\s*(\d{1,2})/i);
+        if (cctv) {
+            const num = parseInt(cctv[1], 10);
+            if (num >= 1 && num <= 17) {
+                return "CCTV-" + num;
+            }
+        }
+
+        // 排除明显非目标频道
+        const exclude = [
+            "轮播", "短剧", "电视剧", "高清臻享",
+            "高清臻享", "耀眼", "妻子的浪漫旅行",
+            "热播短剧", "精品短剧", "爆款短剧",
+            "活力健身", "4k花园", "奶龙",
+            "东方娃娃", "斗罗大陆", "蓝盔特战队",
+            "西游记续集", "怀旧经典", "红楼梦",
+            "康熙王朝", "养生堂", "全民健身",
+            "笑满屏间", "蛋仔乐园", "沙盒乐园",
+            "精英战场", "动画奇遇记", "果果乐园",
+            "游戏视界", "我的世界"
+        ];
+
+        for (const word of exclude) {
+            if (n.includes(word)) return null;
+        }
+
+        // 卫视：去除画质标记，保留标准名称
+        if (n.includes("卫视")) {
+            n = n
+                .replace(/^H265[-_]?/i, "")
+                .replace(/[-_]H265$/i, "")
+                .replace(/高清臻享|超高清|超清|极清|高清|标清|4K/gi, "")
+                .replace(/[-_ ]?\d+(\.\d+)?M$/i, "")
+                .trim();
+
+            return n || null;
+        }
+
+        // 地方台区域名称
+        const areas = [
+            "江苏", "南京", "无锡", "苏州", "常州",
+            "南通", "连云港", "淮安", "盐城", "扬州",
+            "镇江", "泰州", "宿迁", "徐州",
+            "江阴", "宜兴", "昆山", "宝应", "高淳",
+            "泰兴", "靖江", "沭阳", "东海", "赣榆",
+            "邳州", "睢宁", "沛县", "新沂"
+        ];
+
+        const isLocal = areas.some(area => n.startsWith(area));
+
+        if (!isLocal) return null;
+
+        // 去除画质后缀
+        n = n
+            .replace(/^H265[-_]?/i, "")
+            .replace(/[-_]H265$/i, "")
+            .replace(/高清臻享|超高清|超清|极清|高清|标清/gi, "")
+            .replace(/[-_ ]?\d+(\.\d+)?M$/i, "")
+            .replace(/（江苏超清）/g, "")
+            .trim();
+
+        // 地方频道名称去掉频道二字
+        n = n.replace(/频道$/, "");
+
+        if (!n) return null;
+
+        // 只保留真正的地方广播电视栏目
+        const localTypes = [
+            "新闻综合", "新闻", "综合", "公共",
+            "都市", "生活", "民生", "经济",
+            "教育", "体育", "文艺", "影视",
+            "一套", "二套", "三套", "四套",
+            "社会", "娱乐"
+        ];
+
+        if (!localTypes.some(type => n.includes(type))) {
+            return null;
+        }
+
+        return n;
+    }
+
+    // ================= 画质版本优先级 =================
+
+    function qualityRank(channel) {
+        const name = channel.name;
+        const uuid = channel.uuid;
+
+        // 优先选择没有画质标记的标准频道
+        if (
+            !/H265|高清|超清|极清|4K|8K|标清|臻享/i.test(name) &&
+            !/H265|AVS|2160P|1080P|576P|-\d+M/i.test(uuid)
+        ) {
+            return 0;
+        }
+
+        // 普通高清版本
+        if (/高清|H265|1080P/i.test(name + uuid)) {
+            return 1;
+        }
+
+        // 4K及其他特殊版本放最后
+        return 2;
+    }
+
+    // ================= 获取频道列表 =================
+
+    const channelUrl = baseUrl + "channelList?abilityString=" +
+        encodeURIComponent(ability);
+
+    const channelJson = getJson(channelUrl);
+
+    if (!channelJson) {
+        return { programs: [] };
+    }
+
+    if (
+        channelJson.resultCode &&
+        String(channelJson.resultCode) !== "000"
+    ) {
+        return { programs: [] };
+    }
+
+    const rawChannels = [];
+    extractChannels(channelJson, rawChannels);
+
+    // UUID去重
+    const uuidSeen = {};
+    const channels = [];
+
+    for (const ch of rawChannels) {
+        if (!ch.uuid || !ch.name || uuidSeen[ch.uuid]) continue;
+
+        uuidSeen[ch.uuid] = true;
+
+        const canonicalName = normalizeChannel(ch.name);
+        if (!canonicalName) continue;
+
+        channels.push({
+            name: ch.name,
+            uuid: ch.uuid,
+            canonical: canonicalName
+        });
+    }
+
+    // ================= 每个频道只选择一个UUID =================
+
+    const grouped = {};
+
+    for (const ch of channels) {
+        const key = ch.canonical;
+
+        if (!grouped[key]) {
+            grouped[key] = [];
+        }
+
+        grouped[key].push(ch);
+    }
+
+    const selectedChannels = [];
+
+    for (const name in grouped) {
+        const candidates = grouped[name];
+
+        candidates.sort((a, b) => {
+            return qualityRank(a) - qualityRank(b);
+        });
+
+        // 每个标准频道只保留一个UUID
+        selectedChannels.push({
+            name: name,
+            uuid: candidates[0].uuid
+        });
+    }
+
+    // CCTV优先排序
+    function channelOrder(a, b) {
+        const getNum = name => {
+            if (name === "CCTV-5+") return 5.5;
+            if (name === "CCTV-4K") return 18;
+            if (name === "CCTV-8K") return 19;
+
+            const m = name.match(/^CCTV-(\d+)$/);
+            if (m) return Number(m[1]);
+
+            return 100;
+        };
+
+        const x = getNum(a.name);
+        const y = getNum(b.name);
+
+        if (x !== y) return x - y;
+
+        return a.name.localeCompare(b.name, "zh-CN");
+    }
+
+    selectedChannels.sort(channelOrder);
+
+    // ================= 获取EPG =================
+
+    const programs = [];
+    const programSeen = {};
+
+    for (const channel of selectedChannels) {
+        for (const timestamp of timestamps) {
+            const date = jz.toDate(timestamp, "yyyyMMdd");
+
+            const url = baseUrl + "getAllProgramlist?" +
+                "abilityString=" + encodeURIComponent(ability) +
+                "&startDate=" + date +
+                "&endDate=" + date +
+                "&uuid=" + encodeURIComponent(channel.uuid);
+
+            const json = getJson(url);
+
+            if (!json) continue;
+
+            if (
+                json.resultCode &&
+                String(json.resultCode) !== "000"
+            ) {
+                continue;
+            }
+
+            if (!Array.isArray(json.content)) continue;
+
+            for (const day of json.content) {
+                if (!Array.isArray(day.programs)) continue;
+
+                for (const p of day.programs) {
+                    if (
+                        !p.programName ||
+                        !Number.isFinite(Number(p.startTime)) ||
+                        !Number.isFinite(Number(p.endTime)) ||
+                        Number(p.endTime) <= Number(p.startTime)
+                    ) {
+                        continue;
+                    }
+
+                    const start = Number(p.startTime) * 1000;
+                    const stop = Number(p.endTime) * 1000;
+
+                    const key = channel.name + "|" +
+                        (p.programId || p.programName + "|" + start);
+
+                    if (programSeen[key]) continue;
+                    programSeen[key] = true;
+
+                    programs.push({
+                        name: channel.name,
+                        title: p.programName,
+                        start: start,
+                        stop: stop
+                    });
+                }
+            }
+        }
+    }
+
+    // 按频道及节目开始时间排序
+    programs.sort((a, b) => {
+        const nameCompare = a.name.localeCompare(b.name, "zh-CN");
+        if (nameCompare !== 0) return nameCompare;
+        return a.start - b.start;
+    });
+
+    return {
+        programs: programs
+    };
+}
