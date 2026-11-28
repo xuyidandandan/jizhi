@@ -270,8 +270,3 @@ Referer=https://live.jstv.com/
 北京纪实科教,http://172.31.203.136:8006/jscn/DongAoJiShiHD.m3u8$Name=江苏有线
 北京纪实科教,http://112.86.202.37:8112/JSBC_iptv/C10000193@JSBC$Name=江苏联通
 北京纪实科教,http://ott.mobaibox.com/PLTV/4/224/3221227699/index.m3u8$Name=江苏移动
-北京文艺,http://www.huaqiuqiu.site/tv/js/btime.js?id=bjwy$Js=http://www.huaqiuqiu.site/tv/js/btime.js$User-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36$Referer=https://www.btime.com/
-北京新闻,http://www.huaqiuqiu.site/tv/js/btime.js?id=bjxw$Js=http://www.huaqiuqiu.site/tv/js/btime.js$User-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36$Referer=https://www.btime.com/
-北京影视,http://www.huaqiuqiu.site/tv/js/btime.js?id=bjys$Js=http://www.huaqiuqiu.site/tv/js/btime.js$User-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36$Referer=https://www.btime.com/
-北京财经,http://www.huaqiuqiu.site/tv/js/btime.js?id=bjcj$Js=http://www.huaqiuqiu.site/tv/js/btime.js$User-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36$Referer=https://www.btime.com/
-北京体育休闲,http://www.huaqiuqiu.site/tv/js/btime.js?id=bjty$Js=http://www.huaqiuqiu.site/tv/js/btime.js$User-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36$Referer=https://www.btime.com/
