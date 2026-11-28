@@ -213,16 +213,8 @@ CETV-4,http://172.31.203.136:8006/jscn/CETV-4.m3u8$Name=江苏有线$Tvg=CETV4
 宁夏卫视,https://hls.ningxiahuangheyun.com/live/nxws1M.m3u8$Name=宁夏
 青海卫视,http://112.86.202.37:8112/JSBC_iptv/C10000408@JSBC$Name=江苏联通
 内蒙古卫视,http://112.86.202.37:8112/JSBC_iptv/C10000469@JSBC$Name=江苏联通
-西藏卫视,http://www.huaqiuqiu.site/tv/js/xizang.js?id=xzws$Js=http://www.huaqiuqiu.site/tv/js/xizang.js$Name=西藏JS
-深圳卫视,http://www.huaqiuqiu.site/tv/js/shenzhen.js?id=szws4k$Js=http://www.huaqiuqiu.site/tv/js/shenzhen.js$Name=深圳JS 4K
-深圳卫视,http://www.huaqiuqiu.site/tv/js/shenzhen.js?id=szws$Js=http://www.huaqiuqiu.site/tv/js/shenzhen.js$Name=深圳JS
-新疆卫视,http://www.huaqiuqiu.site/tv/js/migu.js?id=xjws$Js=http://www.huaqiuqiu.site/tv/js/xinjiang.js$Name=新疆JS
-内蒙古卫视,http://www.huaqiuqiu.site/tv/js/nmtv.js?id=254$Js=http://www.huaqiuqiu.site/tv/js/nmtv.js$Name=内蒙JS
-北京卫视,http://www.huaqiuqiu.site/tv/js/btime.js?id=bjws4k$Js=http://www.huaqiuqiu.site/tv/js/btime.js$Name=北京4KJS
-北京卫视,http://www.huaqiuqiu.site/tv/js/btime.js?id=bjws$Js=http://www.huaqiuqiu.site/tv/js/btime.js$Name=北京JS
 浙江卫视,https://zwebl02.cztv.com/live/channel011080Pnew.m3u8?auth_key=2524708799-ca798ce95dda85537a46f2eb5be537be-0-ec2283c392de5aa07c72e770576478bb$Name=浙视介
 浙江卫视,http://ali-m-l.cztv.com/channels/lantian/channel001/1080p.m3u8$Name=中国蓝
-浙江卫视,http://www.huaqiuqiu.site/tv/js/zsj.js?id=zjws$Js=http://www.huaqiuqiu.site/tv/js/zsj.js$Name=浙视介JS
 陕西卫视,http://alzbl.snrtv.com/live/sxws20250903.m3u8$Name=官网HD
 重温经典,http://8.138.7.223/tv/cwjd.php$Name=网络源
 江苏广电,#genre#
