@@ -209,7 +209,6 @@ CETV-4,http://172.31.203.136:8006/jscn/CETV-4.m3u8$Name=江苏有线$Tvg=CETV4
 宁夏卫视,http://112.86.202.37:8112/JSBC_iptv/C10000453@JSBC$Name=江苏联通
 甘肃卫视,http://112.86.202.37:8112/JSBC_iptv/C10000164@JSBC$Name=江苏联通
 新疆卫视,http://112.86.202.37:8112/JSBC_iptv/C10000451@JSBC$Name=江苏联通
-山西卫视,http://www.huaqiuqiu.site/shanxi.php?id=sxws$Name=山西PHP
 宁夏卫视,https://hls.ningxiahuangheyun.com/live/nxws1M.m3u8$Name=宁夏
 青海卫视,http://112.86.202.37:8112/JSBC_iptv/C10000408@JSBC$Name=江苏联通
 内蒙古卫视,http://112.86.202.37:8112/JSBC_iptv/C10000469@JSBC$Name=江苏联通
@@ -227,7 +226,6 @@ CETV-4,http://172.31.203.136:8006/jscn/CETV-4.m3u8$Name=江苏有线$Tvg=CETV4
 江苏城市,http://ott.mobaibox.com/PLTV/4/224/3221225929/index.m3u8$Name=江苏移动
 江苏教育,http://ott.mobaibox.com/PLTV/4/224/3221228613/index.m3u8$Name=江苏移动
 江苏体育休闲,http://ott.mobaibox.com/PLTV/4/224/3221225935/index.m3u8$Name=江苏移动
-江苏卫视,http://ott.mobaibox.com/PLTV/4/224/3221227439/index.m3u8$Name=江苏移动
 江苏新闻,http://ott.mobaibox.com/PLTV/4/224/3221225925/index.m3u8$Name=江苏移动
 江苏影视,http://ott.mobaibox.com/PLTV/4/224/3221228728/index.m3u8$Name=江苏移动
 江苏综艺,http://ott.mobaibox.com/PLTV/4/224/3221225931/index.m3u8$Name=江苏移动
